@@ -75,4 +75,5 @@ jobs:
         with:
           app-name: 'consulting-results'
           slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_frontend_consulting_results }}
           
