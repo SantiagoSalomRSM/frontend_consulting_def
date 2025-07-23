@@ -169,6 +169,7 @@
         <thead>
             <tr>
                 <th>ID de Petición</th>
+                <th>Tipo de Formulario</th>
                 <th>Estado</th>
             </tr>
         </thead>
@@ -181,6 +182,7 @@
                 -->
                 <tr onclick="window.location.href='{{ url_for('index') }}?submission_id={{ submission.id }}'">
                     <td>{{ submission.id }}</td>
+                    <td>{{ submission.form_type }}</td>
                     <td>
                         <!-- Add a nice colored badge for the status -->
                         <span class="status status-{{ submission.status.lower() if submission.status in ['success', 'processing', 'error'] else 'default' }}">
