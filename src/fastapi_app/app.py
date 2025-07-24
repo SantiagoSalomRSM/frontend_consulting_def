@@ -68,7 +68,8 @@ async def index(request: Request, submission_id: Optional[str] = Query(default=N
         try:
             # Fetch columns needed for the table view. Let's get id and status.
             # Ordering by a timestamp column would be ideal if you have one.
-            cur.execute("SELECT submission_id, form_type, status, created_at, updated_at FROM formai_db ORDER BY submission_id DESC")
+            cur.execute("SELECT submission_id, form_type, status, TO_CHAR(created_at AT TIME ZONE 'Europe/Madrid', 'YYYY-MM-DD HH24:MI:SS') AS created_at, " \
+            "TO_CHAR(updated_at AT TIME ZONE 'Europe/Madrid', 'YYYY-MM-DD HH24:MI:SS') AS updated_at FROM formai_db ORDER BY submission_id DESC")
             all_submissions = cur.fetchall()
             
             # Create a list of dictionaries to pass to the template
