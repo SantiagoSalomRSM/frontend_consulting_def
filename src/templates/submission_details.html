@@ -302,7 +302,8 @@
       <details>
         <summary>Ver Respuestas del Formulario</summary>
         <ul>
-          {% for question, answer in user_responses.items() %}
+          {# This loop now expects user_responses to be a list of (question, answer) pairs #}
+          {% for question, answer in user_responses %}
             <li><strong>{{ question }}:</strong> {{ answer }}</li>
           {% endfor %}
         </ul>
