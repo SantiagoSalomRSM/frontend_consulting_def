@@ -73,7 +73,7 @@ async def index(request: Request, submission_id: Optional[str] = Query(default=N
             
             # Create a list of dictionaries to pass to the template
             submissions_data = [
-                {"id": row[0], "form_type": row[1],"status": row[2]} for row in all_submissions
+                {"id": row[0], "form_type": row[1], "status": row[2], "created_at": row[3], "updated_at": row[4]} for row in all_submissions
             ]
 
             return templates.TemplateResponse("submissions_list.html", {
