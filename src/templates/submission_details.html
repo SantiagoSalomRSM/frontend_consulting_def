@@ -201,19 +201,19 @@
       transform: rotate(90deg);
     }
     
-    .responses-container ul {
-      margin-top: 1rem;
-      padding-left: 1.5rem;
-      color: var(--color-muted);
-      list-style: none;
-    }
-
-    .responses-container li {
-      margin-bottom: 0.5rem;
-    }
-
-    .responses-container li strong {
-        color: var(--color-text);
+    .raw-responses {
+        white-space: pre-wrap; /* Allows text to wrap */
+        word-wrap: break-word; /* Breaks long words if needed */
+        background-color: color-mix(in srgb, var(--color-bg) 50%, var(--color-surface));
+        padding: 1rem;
+        border-radius: 8px;
+        color: var(--color-muted);
+        font-family: 'Menlo', 'Consolas', monospace;
+        font-size: 16px;
+        line-height: 1.6;
+        margin-top: 1rem;
+        max-height: 400px; /* Makes the block scrollable if it's too long */
+        overflow-y: auto;
     }
 
     @media (max-width: 768px) {
@@ -301,12 +301,7 @@
     <div class="responses-container">
       <details>
         <summary>Ver Respuestas del Formulario</summary>
-        <ul>
-          {# This loop now expects user_responses to be a list of (question, answer) pairs #}
-          {% for question, answer in user_responses %}
-            <li><strong>{{ question }}:</strong> {{ answer }}</li>
-          {% endfor %}
-        </ul>
+        <pre class="raw-responses">{{ user_responses }}</pre>
       </details>
     </div>
     {% endif %}
