@@ -158,6 +158,64 @@
       z-index: 1000;
     }
 
+    .responses-container {
+      margin-top: 2.5rem;
+      border-top: 1px solid var(--color-border);
+      padding-top: 2rem;
+    }
+
+    details {
+      background-color: color-mix(in srgb, var(--color-accent) 5%, transparent);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 0.5rem 1.5rem;
+      transition: background-color 0.3s ease;
+    }
+
+    details[open] {
+      background-color: color-mix(in srgb, var(--color-accent) 8%, transparent);
+      padding-bottom: 1.5rem;
+    }
+
+    summary {
+      font-weight: 600;
+      color: var(--color-accent);
+      cursor: pointer;
+      padding: 0.75rem 0;
+      list-style: none; /* Hide default marker */
+    }
+    
+    summary::-webkit-details-marker {
+        display: none; /* Hide default marker for Chrome/Safari */
+    }
+
+    summary::before {
+      content: '▶';
+      margin-right: 0.75rem;
+      font-size: 0.8em;
+      display: inline-block;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+    
+    .responses-container ul {
+      margin-top: 1rem;
+      padding-left: 1.5rem;
+      color: var(--color-muted);
+      list-style: none;
+    }
+
+    .responses-container li {
+      margin-bottom: 0.5rem;
+    }
+
+    .responses-container li strong {
+        color: var(--color-text);
+    }
+
     @media (max-width: 768px) {
       .card {
         padding: 2rem 1.5rem;
@@ -238,6 +296,19 @@
     <div class="content" aria-live="polite">
       {{ results_client|safe }}
     </div>
+
+    {% if user_responses %}
+    <div class="responses-container">
+      <details>
+        <summary>Ver Respuestas del Formulario</summary>
+        <ul>
+          {% for question, answer in user_responses.items() %}
+            <li><strong>{{ question }}:</strong> {{ answer }}</li>
+          {% endfor %}
+        </ul>
+      </details>
+    </div>
+    {% endif %}
 
     <div class="cta">
       <button onclick="window.print()">🧾 Descargar PDF</button>

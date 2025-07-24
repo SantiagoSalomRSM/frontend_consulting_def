@@ -93,7 +93,7 @@ async def index(request: Request, submission_id: Optional[str] = Query(default=N
         logger.info(f"Fetching details for submission ID: {submission_id}")
         try:
             cur.execute(
-                "SELECT result_consulting, status FROM formai_db WHERE submission_id = %s",
+                "SELECT result_consulting, status, user_responses FROM formai_db WHERE submission_id = %s",
                 (submission_id,)
             )
             row = cur.fetchone()
@@ -105,7 +105,7 @@ async def index(request: Request, submission_id: Optional[str] = Query(default=N
                     "submission_id": submission_id
                 })
 
-            result_consulting, status = row
+            result_consulting, status, user_responses = row
 
             if status == "processing":
                 # Render a "please wait" page with JS polling
@@ -122,7 +122,8 @@ async def index(request: Request, submission_id: Optional[str] = Query(default=N
             logger.info(f"Retrieved results for submission ID {submission_id}.")
             return templates.TemplateResponse("submission_details.html", {
                 "request": request,
-                "results_client": html_content
+                "results_client": html_content,
+                "user_responses": user_responses,
             })
         except Exception as e:
             logger.error(f"Error fetching details for {submission_id}: {e}")
