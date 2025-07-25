@@ -68,13 +68,13 @@ async def index(request: Request, submission_id: Optional[str] = Query(default=N
         try:
             # Fetch columns needed for the table view. Let's get id and status.
             # Ordering by a timestamp column would be ideal if you have one.
-            cur.execute("SELECT submission_id, form_type, status, TO_CHAR(created_at AT TIME ZONE 'Europe/Madrid', 'DD-MM-YYYY HH24:MI:SS') AS created_at, " \
-            "TO_CHAR(updated_at AT TIME ZONE 'Europe/Madrid', 'DD-MM-YYYY HH24:MI:SS') AS updated_at FROM formai_db ORDER BY created_at DESC")
+            cur.execute("SELECT submission_id, form_type, status, sector, TO_CHAR(created_at AT TIME ZONE 'Europe/Madrid', 'DD-MM-YYYY HH24:MI:SS') AS created_at" \
+            "FROM formai_db ORDER BY created_at DESC")
             all_submissions = cur.fetchall()
             
             # Create a list of dictionaries to pass to the template
             submissions_data = [
-                {"id": row[0], "form_type": row[1], "status": row[2], "created_at": row[3], "updated_at": row[4]} for row in all_submissions
+                {"id": row[0], "form_type": row[1], "status": row[2], "sector": row[3], "created_at": row[4]} for row in all_submissions
             ]
 
             return templates.TemplateResponse("submissions_list.html", {
